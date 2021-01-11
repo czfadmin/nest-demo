@@ -20,9 +20,11 @@ export class CatController {
 	@Post()
 	@HttpCode(204)
 	create(@Body() createCatDto: CreateCatDto): string {
-		var id = 0;
-		let newCat = this.catService.create(createCatDto);
-		return `This action create a #${id} cat;`
+		let newCat;
+		this.catService.create(createCatDto).subscribe(it => {
+			newCat = it;
+		});
+		return `This action create a #${newCat} cat;`
 	}
 
 	@Get('id')

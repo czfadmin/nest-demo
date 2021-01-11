@@ -1,20 +1,21 @@
-import { CatService } from './core/service/cat.service';
 import { CoreModule } from './core/core.module';
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CatController } from './controller/cat.controller';
+import { LoggerMiddleware } from './core/middleware/logger.middleware';
+
+
 
 const CONTROLLERS = [
 	CatController
 ];
 const MODULES = [
-	CoreModule
+	CoreModule,
 ];
 const SERVICES = [
 
 ];
-
 const PROVIDERS = [
 
 ];
@@ -30,4 +31,8 @@ const PROVIDERS = [
 		AppService
 	],
 })
-export class AppModule { }
+export class AppModule {
+	configure(consumer: MiddlewareConsumer) {
+		consumer.apply(LoggerMiddleware).forRoutes('cats')
+	}
+}
