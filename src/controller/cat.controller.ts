@@ -1,12 +1,14 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Req } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Req, SetMetadata, UseGuards } from '@nestjs/common'
 
 import { Observable } from 'rxjs';
 import { CatService } from 'src/core/service/cat.service';
 import { CreateCatDto } from 'src/data/dto/cat.dto';
 import { Cat } from 'src/data/models/cat';
 import { ForbiddenException } from 'src/core/exception/forbidden.exception'
-
+import { AuthGuard } from "src/core/guard/auth.guard"
+import { RolesGuard } from 'src/core/guard/roles.guard';
 @Controller('cats')
+@UseGuards(RolesGuard)
 export class CatController {
 
 	constructor(private readonly catService: CatService) {
@@ -44,4 +46,17 @@ export class CatController {
 	delete(@Param('id') id: string): string {
 		return `This action delete a #${id} cat;`
 	}
+
+
+
+	@Get()
+	// @SetMetadata('roles', ['admin'])
+	@Roles('admin')
+	async auth(@Body() createCatDto: CreateCatDto) {
+
+	}
+
+
 }
+
+export const Roles = (...roles: string[]) => SetMetadata('roles', roles);
