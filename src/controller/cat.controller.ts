@@ -1,4 +1,5 @@
-import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Req, SetMetadata, UseGuards } from '@nestjs/common'
+import { TransformInterceptor } from './../core/inerceptor/transform.interceptor';
+import { Body, Controller, Delete, Get, HttpCode, Param, Post, Put, Req, SetMetadata, UseGuards, UseInterceptors } from '@nestjs/common'
 
 import { Observable } from 'rxjs';
 import { CatService } from 'src/core/service/cat.service';
@@ -7,8 +8,11 @@ import { Cat } from 'src/data/models/cat';
 import { ForbiddenException } from 'src/core/exception/forbidden.exception'
 import { AuthGuard } from "src/core/guard/auth.guard"
 import { RolesGuard } from 'src/core/guard/roles.guard';
+import { LoggingInterceptor } from 'src/core/inerceptor/logging.interceptor';
 @Controller('cats')
 @UseGuards(RolesGuard)
+@UseInterceptors(LoggingInterceptor)
+@UseInterceptors(TransformInterceptor)
 export class CatController {
 
 	constructor(private readonly catService: CatService) {
@@ -46,7 +50,6 @@ export class CatController {
 	delete(@Param('id') id: string): string {
 		return `This action delete a #${id} cat;`
 	}
-
 
 
 	@Get()
