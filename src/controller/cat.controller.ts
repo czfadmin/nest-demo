@@ -54,7 +54,7 @@ export class CatController {
 
 	@Get()
 	// @SetMetadata('roles', ['admin'])
-	@Roles('admin')
+	// @Roles('admin')
 	async auth(@Body() createCatDto: CreateCatDto) {
 
 	}

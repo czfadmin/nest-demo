@@ -1,3 +1,6 @@
+import { AccountController } from './controller/account.controller';
+import { UserModule } from './core/modules/user/user.module';
+import { AuthModule } from './core/modules/auth/auth.module';
 import { CoreModule } from './core/core.module';
 import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { AppController } from './app.controller';
@@ -21,9 +24,12 @@ const PROVIDERS = [
 ];
 @Module({
 	imports: [
+		UserModule,
+		AuthModule,
 		...MODULES,
 	],
 	controllers: [
+		AccountController,
 		AppController,
 		...CONTROLLERS
 	],
