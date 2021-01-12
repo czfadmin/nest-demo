@@ -2,13 +2,14 @@ import { Module, Global } from '@nestjs/common';
 import { CatService } from './service/cat.service';
 import { UtilsModule } from './utils/utils.module';
 import { LoggerModule, Logger } from 'nestjs-pino'
+import { AuthService } from './modules/auth/auth.service';
 
 const IMPORT_MODULES = [
 	UtilsModule,
 	LoggerModule.forRoot()
 ]
 const PROVIDERS = [
-	CatService
+	CatService,
 ];
 const EXPORT_PROVIDERS = [
 	UtilsModule
