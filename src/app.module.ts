@@ -1,3 +1,5 @@
+import { ConfigModule } from './core/modules/config/config.module';
+import { ConfigService } from './core/modules/config/config.service';
 import { PhotoModule } from './core/modules/photo/photo.module';
 import { AccountController } from './controller/account.controller';
 import { UserModule } from './core/modules/user/user.module';
@@ -38,6 +40,7 @@ const PROVIDERS = [
 ];
 @Module({
 	imports: [
+		ConfigModule,
 		PhotoModule,
 		UserModule,
 		AuthModule,
@@ -49,6 +52,7 @@ const PROVIDERS = [
 		...CONTROLLERS
 	],
 	providers: [
+		ConfigService,
 		AppService
 	],
 })
