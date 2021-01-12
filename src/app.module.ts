@@ -1,3 +1,5 @@
+import { MulterCofnigService } from './core/service/multercofnig.service';
+import { FileController } from './controller/file.controller';
 import { CacheController } from './controller/cache.controller';
 import { ConfigModule } from './core/modules/config/config.module';
 import { ConfigService } from './core/modules/config/config.service';
@@ -17,6 +19,7 @@ import { Photo } from './data/models/entity/photo.entity';
 import { CoreModule } from './core/core.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import P from 'pino';
+import { MulterModule } from '@nestjs/platform-express';
 
 
 
@@ -45,7 +48,36 @@ const MODULES = [
 	// 	max:10
 	// })
 	// 自定义缓存库 
-	//https://docs.nestjs.cn/6/techniques?id=%e4%b8%8d%e5%90%8c%e7%9a%84%e7%bc%93%e5%ad%98%e5%ba%93
+	//https://docs.nestjs.cn/6/techniques?id=%e4%b8%8d%e5%90%8c%e7%9a%84%e7%bc%93%e5%ad%98%e5%ba%93,
+	// 配置上传
+	MulterModule.register({
+		dest: '/upload',
+	}),
+
+	// 支持异步上传
+	// 1. 使用工厂函数
+	// MulterModule.registerAsync({
+	// 	useFactory: () => ({
+	// 			dest:'/upload',
+	// 	})
+	// })
+
+	// 2.通过注入方式上传依赖
+	// MulterModule.registerAsync({
+	// 	imports: [ConfigModule],
+	// 	useFactory: async (configService: ConfigService) => ({
+	// 		dest: configService.getString('MULTER_DEST'),
+	// 	}),
+	// 	inject: [ConfigService],
+	// });
+
+	// 3. 使用类配置
+	// MulterModule.registerAsync({
+	// 	useClass:MutlerConfigService,
+	// 为了防止创建 MulterConfigService 内部 MulterModule 并使用从不同模块导入的提供程序，您可以使用 useExisting 语法
+	// imports:[ConfigModule]
+	// useExisting: ConfigService,
+	// })
 
 ];
 const SERVICES = [
@@ -63,11 +95,12 @@ const PROVIDERS = [
 		...MODULES,
 	],
 	controllers: [
-
+		FileController,
 		AppController,
 		...CONTROLLERS
 	],
 	providers: [
+		MulterCofnigService,
 		ConfigService,
 		AppService,
 		//全局缓存
