@@ -1,5 +1,8 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
+
+import * as helmet from 'helmet';
+
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -7,7 +10,8 @@ async function bootstrap() {
 	app.useGlobalPipes(new ValidationPipe({
 		disableErrorMessages: true,
 		transform: true,
-	}))
+	}));
+	app.use(helmet())
 	await app.listen(3000);
 }
 bootstrap();
