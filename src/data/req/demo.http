@@ -43,6 +43,11 @@ GET {{baseUrl}}/comments/{{commentId}}/replies/{{getReplies.response.body.//repl
 
 
 ###
-# @name Account Profile
+# @name AccountProfile
 Get {{baseUrl}}/account/profile HTTP/1.1
 Authorization: Bearer {{authToken}}
+
+
+###
+# @name photoRepo
+Get {{baseUrl}}/photo/all HTTP/1.1
