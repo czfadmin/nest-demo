@@ -1,6 +1,10 @@
-export interface CreateCatDto {
-	readonly name: string;
+import { IsEmail, IsNotEmpty } from 'class-validator';
+export class CreateCatDto {
+
+	@IsNotEmpty()
+	name: string;
 	readonly description: string;
+	@IsNotEmpty()
 	readonly breed: string;
 }
 export interface UpdateCatDto {
