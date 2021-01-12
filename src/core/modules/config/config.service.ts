@@ -3,8 +3,6 @@ import * as dotenv from 'dotenv';
 import * as fs from 'fs';
 import * as Joi from '@hapi/joi';
 
-
-
 export type EnvConfig = Record<string, string>;
 
 @Injectable()
