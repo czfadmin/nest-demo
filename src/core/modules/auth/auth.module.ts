@@ -12,7 +12,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 	imports: [
 		UserModule,
 		PassportModule.register({
-			defaultStrategy: 'jwt'
+			defaultStrategy: 'jwt',
+			session: true,
 		}),
 		JwtModule.register({
 			secret: jwtConstants.secret,
